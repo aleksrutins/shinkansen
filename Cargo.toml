@@ -1,0 +1,2 @@
+[workspace]
+members = ["shinkansen_server", "shinkansen_client", "guacamole"]
