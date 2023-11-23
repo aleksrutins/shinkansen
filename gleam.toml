@@ -21,6 +21,7 @@ gleam_otp = "~> 0.8"
 gleam_erlang = "~> 0.23"
 mist = "~> 0.14"
 eredis = "~> 1.7"
+radiate = "~> 0.3"
 
 [dev-dependencies]
 gleeunit = "~> 1.0"

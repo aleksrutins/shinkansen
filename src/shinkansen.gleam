@@ -1,13 +1,23 @@
+import gleam/io
 import gleam/erlang/os
 import gleam/erlang/process
 import gleam/result.{flatten, lazy_unwrap, map}
 import gleam/int
 import wisp
 import mist
+import radiate
 import shinkansen/router
 import shinkansen/cache
 
 pub fn main() {
+  let _ =
+    radiate.new()
+    |> radiate.add_dir("src")
+    |> radiate.on_reload(fn(_, path) {
+      wisp.log_info("Change in " <> path <> ", reloading!")
+    })
+    |> radiate.start()
+
   cache.start_redis()
   wisp.configure_logger()
   let secret_key_base = wisp.random_string(64)
