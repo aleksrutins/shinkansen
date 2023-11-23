@@ -13,11 +13,9 @@ pub fn main() {
   let secret_key_base = wisp.random_string(64)
 
   let port =
-    lazy_unwrap(
-      map(over: os.get_env("PORT"), with: int.base_parse(_, 10))
-      |> flatten,
-      fn() { 8080 },
-    )
+    map(over: os.get_env("PORT"), with: int.base_parse(_, 10))
+    |> flatten
+    |> lazy_unwrap(fn() { 8080 })
 
   let assert Ok(_) =
     wisp.mist_handler(router.handle_request, secret_key_base)
