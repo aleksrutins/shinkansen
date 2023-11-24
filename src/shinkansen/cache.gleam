@@ -72,6 +72,7 @@ fn internal_put(
 
 pub fn put(package: String, version: String, results: SearchResults) {
   internal_put(package, version, encode_search_results(results))
+  |> result.map_error(snag.new)
 }
 
 @external(erlang, "shinkansen_cache_ffi", "get")

@@ -24,7 +24,7 @@ start_redis() ->
 stop_redis() ->
     eredis:stop(redis_proc).
 
-version_specifier(Package, Version) -> lists:concat([Package, "@", Version]).
+version_specifier(Package, Version) -> [Package, "@", Version].
 
 put(Package, Version, Results) ->
     eredis:q(redis_proc, ["SET", version_specifier(Package, Version), Results]).

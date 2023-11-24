@@ -1,8 +1,10 @@
 import gleam/int
-import gleam/result
+import gleam/list
+import gleam/string
+import gleam/result.{try}
 import gleam/dynamic.{type Dynamic}
 import gleam/httpc
-import shinkansen/cache.{type SearchResults}
+import shinkansen/cache.{type SearchResults, SearchResults}
 import shinkansen/github
 import snag
 
@@ -17,7 +19,7 @@ pub fn search(package: String, version: String) -> snag.Result(SearchResults) {
   cache.get(package, version)
   |> result.try_recover(with: fn(_) {
     // fall back to GitHub
-    github.search_commits(package <> " " <> version)
+    github.search_commits(package <> " " <> version <> " repo:NixOS/nixpkgs")
     |> result.map_error(fn(_) { snag.new("Failed to build request") })
     |> result.map(fn(req) {
       httpc.send(req)
@@ -34,6 +36,19 @@ pub fn search(package: String, version: String) -> snag.Result(SearchResults) {
       }
     })
     |> result.flatten
+    |> result.map(fn(results: SearchResults) {
+      SearchResults(
+        items: results.items
+        |> list.filter(fn(commit) {
+          commit.commit.message
+          |> string.starts_with(package <> ":")
+        }),
+      )
+    })
+    |> try(fn(value) {
+      cache.put(package, version, value)
+      |> result.map(fn(_) { value })
+    })
     |> snag.context("Fetching commits from GitHub")
   })
 }

@@ -83,7 +83,7 @@ fn search_results(package, version) {
         }),
       )
     Error(e) -> {
-      wisp.log_debug(
+      wisp.log_error(
         e
         |> snag.pretty_print,
       )
