@@ -17,7 +17,7 @@ pub type SearchResults {
   SearchResults(items: List(CommitInfo))
 }
 
-fn encode_search_results(data: SearchResults) -> String {
+pub fn encode_search_results(data: SearchResults) -> String {
   object([
     #(
       "items",
