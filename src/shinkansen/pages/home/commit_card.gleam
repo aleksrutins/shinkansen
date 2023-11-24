@@ -12,7 +12,19 @@ pub fn commit_card(commit: CommitInfo) {
   h.div(
     [a.class("commit-card")],
     [
-      h.p([a.class("sha")], [e.text(commit.sha)]),
+      h.p(
+        [],
+        [
+          e.text("Archive: "),
+          h.a(
+            [
+              a.class("sha"),
+              a.href("https://github.com/NixOS/nixpkgs/commit/" <> commit.sha),
+            ],
+            [e.text(commit.sha <> " 🔗")],
+          ),
+        ],
+      ),
       h.h2([], [e.text(summary)]),
       h.pre(
         [],

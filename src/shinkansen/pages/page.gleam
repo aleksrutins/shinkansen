@@ -9,6 +9,7 @@ pub fn page(title, content) {
         [],
         [
           h.title([], title),
+          h.meta([a("charset", "UTF-8")]),
           h.link([a("rel", "stylesheet"), a("href", "/static/app.css")]),
         ],
       ),
