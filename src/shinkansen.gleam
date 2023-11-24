@@ -1,4 +1,3 @@
-import gleam/io
 import gleam/erlang/os
 import gleam/erlang/process
 import gleam/result.{flatten, map, unwrap}

@@ -6,6 +6,8 @@ import lustre/attribute as a
 import lustre/element as e
 import lustre/element/html as h
 import shinkansen/pages/page.{page}
+import shinkansen/search
+import snag
 
 pub fn home_page(req: Request) -> Response {
   use <- wisp.require_method(req, Get)
@@ -68,5 +70,24 @@ pub fn home_page(req: Request) -> Response {
 }
 
 fn search_results(package, version) {
-  e.text("Search results")
+  case search.search(package, version) {
+    Ok(results) ->
+      h.div(
+        [a.class("flex-list")],
+        results.items
+        |> list.map(fn(commit) {
+          h.div(
+            [],
+            [e.text("(" <> commit.sha <> ") " <> commit.commit.message)],
+          )
+        }),
+      )
+    Error(e) -> {
+      wisp.log_debug(
+        e
+        |> snag.pretty_print,
+      )
+      h.em([a.class("center")], [e.text("Error fetching search results")])
+    }
+  }
 }
