@@ -1,15 +1,12 @@
 FROM ghcr.io/gleam-lang/gleam:v0.32.4-erlang-alpine
 
 # Add project code
-COPY . /build/
+COPY . /app/
 
 # Compile the project
-RUN cd /build \
-  && gleam export erlang-shipment \
-  && mv build/erlang-shipment /app \
-  && rm -rf /build
+RUN cd /app \
+  && gleam export erlang-shipment
 
 # Run the server
 WORKDIR /app
-# ENTRYPOINT ["/app/entrypoint.sh"]
-# CMD ["run"]
+CMD ["sh", "-c", "sleep 3 && ./build/erlang-shipment/entrypoint.sh run"]
