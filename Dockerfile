@@ -11,5 +11,5 @@ RUN cd /build \
 
 # Run the server
 WORKDIR /app
-ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["run"]
+# ENTRYPOINT ["/app/entrypoint.sh"]
+# CMD ["run"]
