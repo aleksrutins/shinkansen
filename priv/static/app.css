@@ -17,10 +17,11 @@ body {
 }
 
 main {
-    max-width: 60vw;
+    max-width: 1024px;
     margin: auto;
     display: flex;
     flex-direction: column;
+    padding: 10px;
 }
 
 h1.heading, .center {
@@ -85,6 +86,13 @@ form {
     flex-direction: row;
     justify-content: center;
     gap: 5px;
+}
+
+div.flex-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
 }
 
 div.commit-card {
