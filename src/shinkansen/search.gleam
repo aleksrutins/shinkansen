@@ -46,8 +46,13 @@ pub fn search(package: String, version: String) -> snag.Result(SearchResults) {
       )
     })
     |> try(fn(value) {
-      cache.put(package, version, value)
-      |> result.map(fn(_) { value })
+      // Only save non-empty search results
+      case value.items {
+        [] -> Ok(value)
+        _ ->
+          cache.put(package, version, value)
+          |> result.map(fn(_) { value })
+      }
     })
     |> snag.context("Fetching commits from GitHub")
   })
