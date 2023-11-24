@@ -6,6 +6,7 @@ import lustre/attribute as a
 import lustre/element as e
 import lustre/element/html as h
 import shinkansen/pages/page.{page}
+import shinkansen/pages/home/commit_card.{commit_card}
 import shinkansen/search
 import snag
 
@@ -22,7 +23,7 @@ pub fn home_page(req: Request) -> Response {
 
   let page_str =
     page(
-      "Home",
+      "Shinkansen",
       [
         h.h1([a.class("heading")], [e.text("Shinkansen")]),
         h.p(
@@ -75,13 +76,9 @@ fn search_results(package, version) {
       h.div(
         [a.class("flex-list")],
         results.items
-        |> list.map(fn(commit) {
-          h.div(
-            [],
-            [e.text("(" <> commit.sha <> ") " <> commit.commit.message)],
-          )
-        }),
+        |> list.map(commit_card),
       )
+
     Error(e) -> {
       wisp.log_error(
         e
