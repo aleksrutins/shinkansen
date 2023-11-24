@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: zhulik/redis-action@1.1.0
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "26.0.2"
